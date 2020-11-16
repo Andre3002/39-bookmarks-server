@@ -24,6 +24,8 @@ const logger = winston.createLogger({
     }));
   }
 
+  app.set("logger", logger)
+
 const morganOption = (NODE_ENV === 'production')
     ? 'tiny'
     : 'common';
@@ -45,10 +47,6 @@ app.use(function validateBearerToken(req, res, next) {
 })
 
 app.use("/bookmarks", bookRouter)
-
-app.get('/', (req, res) => {
-    res.send('Hello, world!')
-})
 
 app.use(function errorHandler(error, req, res, next) {
     let response
