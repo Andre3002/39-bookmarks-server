@@ -2,7 +2,6 @@ const express = require('express')
 const bookRouter = express.Router()
 const { v4: uuid } = require('uuid')
 
-
 let bookmarks = [{
     id: "1",
     title: "The Odessey",
@@ -16,7 +15,18 @@ bookRouter
     .get((req, res) => {
         res.json(bookmarks)
     })
-    .post((req, res) => {/* code not shown */ })
+    .post((req, res) => {
+        app.use(express.json()) 
+        const { title, content, url, rating } = req.body;
+
+        if (!header) {
+            logger.error(`Header is required`);
+            return res
+              .status(400)
+              .send('Invalid data');
+          }
+    
+    })
 
 bookRouter
     .route('/:id')
