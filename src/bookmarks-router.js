@@ -19,13 +19,50 @@ bookRouter
     .post(jsonParser, (req, res) => {
         // app.use(express.json())
         const { title, content, url, rating } = req.body;
-        const logger = req.app.get("logger")
+        const logger = req.app.get("logger") // how to get logger in multiple places pt2/2
 
-        if (!title || !content || !url || !rating) {
-            logger.error(`Title, content, url and a rating are required`);
+        if (!title) {
+            logger.error(`A valid title is required`);
             return res
                 .status(400)
-                .send('Invalid data');
+                .send('A valid title is required');
+        }
+
+        if (!content) {
+            logger.error(`Valid content is required`);
+            return res
+                .status(400)
+                .send(`Valid content is required`);
+        }
+
+        if (!url) {
+            logger.error(`A valid url is required`);
+            return res
+                .status(400)
+                .send('A valid url is required');
+        }
+
+        //validation of url
+        const regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+        if (!regexp.test(url)) {
+            logger.error(`A valid url is required`);
+            return res
+                .status(400)
+                .send('A valid url is required');
+        }
+
+        if (!rating) {
+            logger.error(`A valid rating is required`);
+            return res
+                .status(400)
+                .send('A valid rating is required');
+        }
+
+        if (rating < 0 || rating > 5) {
+            logger.error(`The rating must a number (0-5)`);
+            return res
+                .status(400)
+                .send('Invalid data.  The rating must a number (0-5)');
         }
 
         // get an id

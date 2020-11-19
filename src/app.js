@@ -24,7 +24,7 @@ const logger = winston.createLogger({
     }));
   }
 
-  app.set("logger", logger)
+  app.set("logger", logger) // how to get logger in multiple places pt 1/2
 
 const morganOption = (NODE_ENV === 'production')
     ? 'tiny'
