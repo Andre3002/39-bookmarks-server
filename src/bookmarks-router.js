@@ -58,11 +58,11 @@ bookRouter
                 .send('A valid rating is required');
         }
 
-        if (rating < 0 || rating > 5) {
+        if (!(parseInt(rating) >= 0 && parseInt(rating) <= 5)) {
             logger.error(`The rating must a number (0-5)`);
             return res
                 .status(400)
-                .send('Invalid data.  The rating must a number (0-5)');
+                .send('Invalid data.  The rating must be a number (0-5)');
         }
 
         // get an id
